@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.llf.mapper.MerchantInfoMapper">
+    
+    <insert id="addBaseInfo">
+        insert into merchant_base_info
+        (
+	        merchantId,
+	        merchantName,
+	        status,
+	        enterDate,
+	        enterTime,
+	        exitDate,
+	        exitTime,
+	        updateDate,
+	        updateTime
+		)
+        values
+        (
+	        #{merchantId},
+	        #{merchantName},
+	        #{status},
+	        #{enterDate},
+	        #{enterTime},
+	        #{exitDate},
+	        #{exitTime},
+	        #{updateDate},
+	        #{updateTime}
+        )
+    </insert>
+    
+    <insert id="addDetailInfo">
+        insert into merchant_detail_info
+        (
+	        merchantId,
+			merchantType,
+			merchantAddr,
+			merchantTel,
+			legalPerson,
+			estalDate,
+			createDate,
+			createTime,
+			deleteFlag
+		)
+        values
+        (
+	        #{merchantId},
+	        #{merchantType},
+	        #{merchantAddr},
+	        #{merchantTel},
+	        #{legalPerson},
+	        #{estalDate},
+	        #{createDate},
+	        #{createTime},
+	        #{deleteFlag}
+        )
+    </insert>
+    
+    <delete id="delBase" parameterType="MerchantBaseInfoPo">
+        delete from merchant_base_info 
+        where 
+       		merchantId = #{merchantId}
+    </delete>
+    
+    <delete id="delDetail" parameterType="MerchantDetailInfoPo">
+        delete from merchant_detail_info 
+        where 
+       		merchantId = #{merchantId}
+    </delete>
+    
+    <update id="upd">
+        update merchant_base_info 
+        <set>
+        	<if test="merchantName != null and merchantName != ''">
+        		merchantName = #{merchantName},
+        	</if>
+        	<if test="status != null and status != ''">
+        		status = #{status},
+        	</if>
+        	<if test="exitDate != null and exitDate != ''">
+        		exitDate = #{exitDate},
+        	</if>
+        	<if test="exitTime != null and exitTime != ''">
+        		exitTime = #{exitTime},
+        	</if>
+        	<if test="updateDate != null and updateDate != ''">
+        		updateDate = #{updateDate},
+        	</if>
+        	<if test="updateTime != null and updateTime != ''">
+        		updateTime = #{updateTime}
+        	</if>
+        </set>
+        where 
+       		merchantId = #{merchantId}
+    </update>
+    
+    <select id="qryBaseById" resultType="MerchantBaseInfoPo">
+    	select * from merchant_base_info
+    	where merchantId = #{id}
+    </select>
+    
+    <select id="qryDetailById" resultType="MerchantDetailInfoPo">
+    	select * from merchant_detail_info
+    	where merchantId = #{id}
+    </select>
+    
+    <select id="qryList" resultType="MerchantBaseInfoPo" parameterType="MerchantInfoDto">
+    	select * from merchant_base_info
+    	<where>
+    		<if test="merchantId != null and merchantId != ''">
+    			merchantId = #{merchantId}
+    		</if>
+    		<if test="merchantName != null and merchantName != ''">
+    			and merchantName = #{merchantName}
+    		</if>
+    		<if test="status != null and status != ''">
+    			and status = #{status} 
+    		</if>
+    		<if test="status != null and status != '' and status == '1'.toString()">
+    			and enterDate between #{startDate} and #{endDate}
+    		</if>
+    		<if test="status != null and status != '' and status == '2'.toString()">
+    			and exitDate between #{startDate} and #{endDate}
+    		</if>
+    		<if test="status != null and status != '' and status == '3'.toString()">
+    			and updateDate between #{startDate} and #{endDate}
+    		</if>
+    		and deleteFlag != '1'
+    	</where> 
+    </select>
+    
+</mapper>

@@ -1,0 +1,40 @@
+server:
+  port: 8002
+  
+spring:
+  application:
+    name: merchant
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/merchant
+    username: root
+    password: root
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance: 
+           # 服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    lease-expiration-duration-in-seconds: 3
+    lease-renewal-interval-in-seconds: 1
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+      #目的是为了省略resultType里的代码量
+  type-aliases-package: com.llf.po,com.llf.dto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  
+      
+logging:
+  level:
+    root: INFO
+    
+sm2:
+  privateKey: 7b1a6e9e72586c8674313049a5e366816d8c29ff2728e142e3b423f4c63167d7
+  publicKey: 0443cbfde3ad0308294ce1752cbc3345d7692ee813a83672a9e93fb80355b96ae4b941fe100336f3c03fb2471c4242659edb275cb928b6f8bfb16312c8a0d2db37
+  
+  
+sess:
+  time-out: 300

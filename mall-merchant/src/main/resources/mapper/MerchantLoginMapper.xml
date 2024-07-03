@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.llf.mapper.MerchantLoginMapper">
+    
+    <insert id="add" parameterType="MerchantPwdPo">
+        insert into merchant_pwd
+        (
+	        merchantId,
+	        userName,
+	        userPassword,
+	        createDate,
+	        createTime
+		)
+        values
+        (
+	        #{merchantId},
+	        #{userName},
+	        #{userPassword},
+	        #{createDate},
+	        #{createTime}
+        )
+    </insert>
+    
+    <insert id="addRole" parameterType="MerchantRolePo">
+        insert into merchant_role
+        (
+	        roleId,
+	        roleName,
+	        userName,
+	        createDate,
+	        createTime
+		)
+        values
+        (
+	        #{roleId},
+	        #{roleName},
+	        #{userName},
+	        #{createDate},
+	        #{createTime}
+        )
+    </insert>
+    
+    <delete id="del" parameterType="MerchantPwdPo">
+        delete from merchant_pwd 
+        where 
+       		userName = #{userName}
+       	and
+       		userPassword = #{userPassword}
+    </delete>
+    
+    <update id="upd">
+        update merchant_pwd 
+        <set>
+        	<if test="userPassword != null and userPassword != ''">
+        		userPassword = #{userPassword},
+        	</if>
+        	<if test="updateDate != null and updateDate != ''">
+        		updateDate = #{updateDate},
+        	</if>
+        	<if test="updateTime != null and updateTime != ''">
+        		updateTime = #{updateTime},
+        	</if>
+        </set>
+        where 
+       		userName = #{userName}
+    </update>
+    
+    <select id="qry" resultType="MerchantPwdPo">
+    	select * from merchant_pwd
+    	where 
+       		userName = #{userName}
+       	and
+       		userPassword = #{userPassword}
+    </select>
+    
+    <select id="qryMerchantLoginInfo" parameterType="MerchantPwdPo" resultType="map">
+    	select merchantId,pwd.userName,role.roleId,roleName
+    	from 
+    	merchant_pwd pwd
+    	left join merchant_role role on pwd.userName = role.userName
+    	where 
+       		pwd.userName = #{userName}
+       	and
+       		pwd.userPassword = #{userPassword}
+    </select>
+    
+</mapper>
