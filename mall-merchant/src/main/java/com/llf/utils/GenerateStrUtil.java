@@ -12,8 +12,17 @@ public class GenerateStrUtil {
 		
 	}
 	
+	public static String generateSmsImgCode() {
+		
+		return String.valueOf(String.valueOf((int)((Math.random()*9+1)*Math.pow(10,5))));
+		
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(RandomUtils.nextInt(new Random(), 19));
+		
+		String code = String.valueOf((int)((Math.random()*9+1)*Math.pow(10,5)));
+		
+		System.out.println(code);
 	}
 
 }

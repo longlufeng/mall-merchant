@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.llf.dto.MerchantInfoDto;
+import com.llf.dto.MerchantInfoQryDto;
 import com.llf.servcie.MerchantInfoService;
 import com.llf.vo.MerchantInfoVo;
 
@@ -20,9 +20,9 @@ public class MerchantInfoApi {
 	
 	
 	@RequestMapping("/qryByMerchantId")
-	public MerchantInfoVo qryByMerchantId(@RequestBody MerchantInfoDto merchantInfoDto){
+	public MerchantInfoVo qryByMerchantId(@RequestBody MerchantInfoQryDto merchantInfoDto){
 		
-		MerchantInfoVo merchantInfoVo = merchantInfoService.qryById(merchantInfoDto.getMerchantId());
+		MerchantInfoVo merchantInfoVo = merchantInfoService.detailQry(merchantInfoDto.getMerchantId());
 		
 		return merchantInfoVo;
 	}

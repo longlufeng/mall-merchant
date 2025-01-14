@@ -1,4 +1,4 @@
-package com.llf.po;
+package com.llf.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,14 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantPwdPo {
+public class MerchantForPwdDto {
 	
-	private String merchantId;
 	private String merchantLoginName;
 	private String merchantLoginPwd;
-	private String createDate;
-	private String createTime;
-	private String updateDate;
-	private String updateTime;
-
+	private String imgCode;
+	
 }

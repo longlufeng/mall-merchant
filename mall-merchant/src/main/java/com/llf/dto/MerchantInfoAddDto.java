@@ -1,5 +1,7 @@
 package com.llf.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MerchantInfoAddDto {
 	
+	@NotNull(message = "用户id不能为空")
 	private String merchantName;
 	private String merchantType;
 	private String merchantAddr;

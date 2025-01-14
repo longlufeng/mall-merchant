@@ -1,6 +1,5 @@
 package com.llf.mapper;
 
-
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -19,10 +18,10 @@ public interface MerchantLoginMapper {
 	
 	void del(MerchantPwdPo merchantLoginPo);
 	
-	MerchantPwdPo qry(MerchantPwdPo merchantLoginPo);
+	void delRole(MerchantRolePo merchantRolePo);
 	
-	Map<String,Object> qryMerchantLoginInfo(MerchantPwdPo merchantLoginPo);
+	MerchantPwdPo merchantPwdQry(MerchantPwdPo merchantPwdPo);
 	
-	
+	Map<String,Object> merchantDetailInfoQry(MerchantPwdPo merchantPwdPo);
 	
 }

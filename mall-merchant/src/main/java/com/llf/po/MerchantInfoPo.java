@@ -7,10 +7,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantBaseInfoPo {
+public class MerchantInfoPo {
 	
 	private String merchantId;
 	private String merchantName;
+	private String merchantLvl;
+	private String merchantType;
+	private String merchantAddr;
+	private String merchantTel;
+	private String legalPerson;
+	private String estalDate;
 	private String status;
 	private String enterDate;
 	private String enterTime;

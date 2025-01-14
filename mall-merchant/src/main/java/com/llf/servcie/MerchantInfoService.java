@@ -1,21 +1,30 @@
 package com.llf.servcie;
 
 import java.util.List;
+import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import com.llf.bo.MerchantInfoUpdBo;
 import com.llf.dto.MerchantInfoAddDto;
-import com.llf.dto.MerchantInfoDto;
+import com.llf.dto.MerchantInfoDelDto;
+import com.llf.dto.MerchantInfoQryDto;
+import com.llf.dto.TestDto;
 import com.llf.vo.MerchantInfoVo;
 
 public interface MerchantInfoService {
 	
+	JSONObject test(JSONObject testDto);
+	
 	void add(MerchantInfoAddDto merchantInfoAddDto);
 	
-	void del(MerchantInfoDto merchantInfoDto);
+	void del(MerchantInfoDelDto merchantInfoDelDto);
 	
-	void upd(MerchantInfoDto merchantInfoDto);
+	Map<String,String> upd(MerchantInfoUpdBo merchantInfoUpdBo);
 	
-	MerchantInfoVo qryById(String id);
+	MerchantInfoVo detailQry(String id);
 	
-	List<MerchantInfoVo> qryList(MerchantInfoDto merchantInfoDto);
-
+	Map<String,String> detailQryByMerchantId(String merchantId);
+	
+	List<MerchantInfoVo> listQry(MerchantInfoQryDto merchantInfoQryDto);
+	
 }

@@ -72,5 +72,13 @@ public class ResultPackage<T> implements Serializable {
         result.setMsg(msg);
         return result;
     }
+    
+    public static ResultPackage<Object> failure(Object data) {
+    	ResultPackage<Object> result = new ResultPackage<Object>();
+        result.setCode("999999");
+        result.setMsg("交易失败");
+        result.setData(data);
+        return result;
+    }
  
 }

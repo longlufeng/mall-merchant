@@ -4,21 +4,27 @@ server:
 spring:
   application:
     name: merchant
+  cloud:
+    nacos:
+      # nacos 服务注册
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 9586b377-9ed4-4b74-af1a-580b19a12d2f
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/merchant
     username: root
-    password: root
+    password: 123456
+  # session配置
+  session:
+    timeout: 10 # 设置session在redis的失效时间
+    store-type: redis # 修改spring-session存储配置，默认存储到服务器内存中，现在设置存到redis中（关键）
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 1800000
     
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-  instance: 
-           # 服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
-    lease-expiration-duration-in-seconds: 3
-    lease-renewal-interval-in-seconds: 1
-
 mybatis:
   mapper-locations: classpath:mapper/*.xml
       #目的是为了省略resultType里的代码量
@@ -36,5 +42,17 @@ sm2:
   publicKey: 0443cbfde3ad0308294ce1752cbc3345d7692ee813a83672a9e93fb80355b96ae4b941fe100336f3c03fb2471c4242659edb275cb928b6f8bfb16312c8a0d2db37
   
   
-sess:
-  time-out: 300
+session:
+  timeout: 300
+url:
+  no-need-chk-session: /user/login,/user/register
+  no-need-chk-login: /user/login,/user/register
+
+merchant:
+  salt: fgf
+  default-pwd: 1
+  
+default:
+  pwd: 123456
+
+isTest: true

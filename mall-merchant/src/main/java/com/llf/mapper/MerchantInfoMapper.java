@@ -1,31 +1,27 @@
 package com.llf.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.llf.dto.MerchantInfoDto;
-import com.llf.po.MerchantDetailInfoPo;
-import com.llf.po.MerchantBaseInfoPo;
+import com.llf.dto.MerchantInfoQryDto;
+import com.llf.po.MerchantInfoPo;
 
 @Mapper
 public interface MerchantInfoMapper {
 	
-	void addBaseInfo(MerchantBaseInfoPo merchantBaseInfoPo);
+	void add(MerchantInfoPo merchantInfoPo);
 	
-	void addDetailInfo(MerchantDetailInfoPo merchantDetailInfoPo);
+	void del(MerchantInfoPo merchantInfoPo);
 	
-	void delBase(MerchantBaseInfoPo MerchantBaseInfoPo);
+	void upd(MerchantInfoPo merchantInfoPo);
 	
-	void delDetail(MerchantDetailInfoPo merchantDetailInfoPo);
+	MerchantInfoPo detailQry(@Param("merchantId") String merchantId);
 	
-	void upd(MerchantBaseInfoPo MerchantBaseInfoPo);
+	Map<String,String> detailQryByMerchantId(@Param("merchantId") String merchantId);
 	
-	MerchantBaseInfoPo qryBaseById(@Param("id") String id);
-	
-	MerchantDetailInfoPo qryDetailById(@Param("id") String id);
-	
-	List<MerchantBaseInfoPo> qryList(MerchantInfoDto merchantInfoDto);
+	List<MerchantInfoPo> listQry(MerchantInfoQryDto merchantInfoQryDto);
 
 }

@@ -11,6 +11,14 @@ public class MerchantInfoVo {
 	
 	private String merchantId;
 	private String merchantName;
+	private String merchantLvl;
+	private String merchantLvlDesc;
+	private String merchantType;
+	private String merchantTypeDesc;
+	private String merchantAddr;
+	private String merchantTel;
+	private String legalPerson;
+	private String estalDate;
 	private String status;
 	private String statusDesc;
 	private String enterDate;
@@ -19,10 +27,6 @@ public class MerchantInfoVo {
 	private String exitTime;
 	private String updateDate;
 	private String updateTime;
-	private String merchantType;
-	private String merchantAddr;
-	private String merchantTel;
-	private String legalPerson;
-	private String estalDate;
+	
 
 }

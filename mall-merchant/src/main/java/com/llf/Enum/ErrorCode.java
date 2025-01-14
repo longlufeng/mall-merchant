@@ -2,7 +2,12 @@ package com.llf.Enum;
 
 public enum ErrorCode {
 	USER_REGISTERD("100001", "用户已经被注册"),
-	USER_OR_PWD_ERROR("100002", "用户名或者密码错误");
+	USER_OR_PWD_ERROR("100002", "用户名或者密码错误"),
+	USER_OLD_PWD_ERROR("100002", "用户名原密码错误"),
+	SMS_CODE_EXPIRE("100003", "图形验证码过期"),
+	IMG_CODE_EXPIRE("100004", "短信验证码过期"),
+	SMS_CODE_ERROR("100005", "图形验证码输入错误"),
+	IMG_CODE_ERROR("100006", "短信验证码输入错误");
 	
 	private String code;
 	private String msg;

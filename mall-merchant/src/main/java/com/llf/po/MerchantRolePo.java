@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MerchantRolePo {
 	
+	private String merchantId;
 	private String roleId;
-	private String roleName;
-	private String userName;
 	private String createDate;
 	private String createTime;
 	private String updateDate;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Appenders>
+	
+		<!-- 定义一个传送日志的输出器，名字叫console,日志输送到控制台，输出方式为SYSTEM_OUT -->
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c - %m%n" />
+		</Console>
+		
+		<!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<RollingFile name="rollingLogFile" fileName="/logs/merchant/info.log" filePattern="/logs/merchant/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.zip">
+			<!--只记录level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c - %m%n" />
+			<!-- 滚动策略 -->
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<!-- 文件每超过20M就生成一个新的日志文件  -->
+				<SizeBasedTriggeringPolicy size="20M" />
+			</Policies>
+			<!-- 指定同一个文件夹下最多存放的文件数量,当日志文件超限时,会删除最早生成的,生成新的日志文件 -->
+			<DefaultRolloverStrategy max="6">
+				<Delete basePath="/logs/merchant/" maxDepth="2">
+					<IfFileName glob="*/*.log.zip" />
+					<!--!Note: 这里的age必须和filePattern协调, 后者是精确到HH, 这里就要写成xH, xd就不起作用 另外, 数字最好>2, 
+						否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功! -->
+					<!--7天 -->
+					<IfLastModified age="7d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+	</Appenders>
+	<!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+	<Loggers>
+	 	<!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+         <logger name="org.springframework" level="INFO"></logger>
+         <logger name="org.mybatis" level="INFO"></logger>
+         <!-- com.llf.mapper路径下日志级别大于等于debug的都可以输出到 console和rollingLogFile-->
+         <logger name="com.llf.mapper" level="debug"></logger>
+         
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingLogFile" />
+		</Root>
+	</Loggers>
+</Configuration>

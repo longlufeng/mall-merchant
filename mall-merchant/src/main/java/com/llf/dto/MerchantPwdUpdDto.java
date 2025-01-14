@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantRegisterDto {
+public class MerchantPwdUpdDto {
 	
-	private String merchantLoginName;
-	private String merchantLoginPwd;
-
+	private String merchantId;
+	private String oldPwd;
+	private String newPwd;
+	
 }

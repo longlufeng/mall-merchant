@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantPwdPo {
+public class RolePo {
 	
-	private String merchantId;
-	private String merchantLoginName;
-	private String merchantLoginPwd;
+	private String roleId;
+	private String roleName;
 	private String createDate;
 	private String createTime;
 	private String updateDate;

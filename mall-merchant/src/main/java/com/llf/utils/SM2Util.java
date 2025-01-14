@@ -1,5 +1,6 @@
 package com.llf.utils;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.bouncycastle.asn1.gm.GMNamedCurves;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.crypto.CryptoException;
@@ -13,14 +14,26 @@ import org.bouncycastle.math.ec.ECPoint;
 import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.encoders.Hex;
 
+import com.alibaba.fastjson.JSONObject;
+
 import cn.hutool.crypto.ECKeyUtil;
 import cn.hutool.crypto.SecureUtil;
 
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SM2Util {
+	
+	public static String PUBLIC_KEY = "0437e96fe04dfec36fe6c0b80670f6f3028ffe0813539520f00b97936dac434f8bbe4db768f03b68a8773409274eb783477c10348842ae6a7be50891b4971b96f5";
+	
+	public static String PRIVATE_KEY = "369e96b817c97b56bff8a6472188575243356bb2f6627b35f4201a039e57bfd9";
+	
+	public static String SIGN_PUBLIC_KEY = "0443cbfde3ad0308294ce1752cbc3345d7692ee813a83672a9e93fb80355b96ae4b941fe100336f3c03fb2471c4242659edb275cb928b6f8bfb16312c8a0d2db37";
+	
+	public static String SIGN_PRIVATE_KEY = "7b1a6e9e72586c8674313049a5e366816d8c29ff2728e142e3b423f4c63167d7";
 	
     /**
      * SM2加密算法，然后转换为16进制字符串
@@ -156,13 +169,36 @@ public class SM2Util {
     }
     
     public static void main(String[] args) {
+    	
+    	Map<String,Object> map = new HashMap();
+    	map.put("name", "张三");
+    	map.put("age", "20");
+    	JSONObject jsonObject = new JSONObject(map);
+    	String plainText = jsonObject.toJSONString();
+     	
     	try {
-    		String content = "我是程序员";
-    		System.out.println("数据："+ content);
-    		String signData = sign("7b1a6e9e72586c8674313049a5e366816d8c29ff2728e142e3b423f4c63167d7", content);
-    		System.out.println("加签后的数据："+ signData);
-    		boolean result = verify("我是程序员", "0443cbfde3ad0308294ce1752cbc3345d7692ee813a83672a9e93fb80355b96ae4b941fe100336f3c03fb2471c4242659edb275cb928b6f8bfb16312c8a0d2db37", signData);
-    		System.out.println(result);
+    		System.out.println("-------------------加密解密----------------------");
+    		System.out.println("明文："+plainText);
+    		String ciphertext = encrypt(plainText,PUBLIC_KEY);
+    		System.out.println("明文加密之后的密文："+ciphertext);
+    		String signData = sign(SIGN_PRIVATE_KEY, ciphertext);
+    		System.out.println("密文签名后的数据："+signData);
+    		boolean result = verify(ciphertext, SIGN_PUBLIC_KEY, signData);
+    		if(!result) {
+    			System.out.println("验证失败");
+    			return;
+    		}
+    		String oldtext = decrypt(ciphertext,PRIVATE_KEY);
+    		System.out.println("密文解密之后的原数据："+oldtext);
+    		
+    		
+//    		System.out.println("-------------------签名验签----------------------");
+//    		String content = dataStr;
+//    		System.out.println("数据："+ content);
+//    		String signData = sign("7b1a6e9e72586c8674313049a5e366816d8c29ff2728e142e3b423f4c63167d7", content);
+//    		System.out.println("加签后的数据："+ signData);
+//    		boolean result = verify(dataStr, "0443cbfde3ad0308294ce1752cbc3345d7692ee813a83672a9e93fb80355b96ae4b941fe100336f3c03fb2471c4242659edb275cb928b6f8bfb16312c8a0d2db37", signData);
+//    		System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

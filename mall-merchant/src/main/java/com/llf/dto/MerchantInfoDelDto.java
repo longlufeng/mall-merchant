@@ -1,5 +1,8 @@
 package com.llf.dto;
 
+
+import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantInfoDto {
+public class MerchantInfoDelDto {
 	
+	@NotBlank (message = "merchantId不能为空")
 	private String merchantId;
-	private String merchantName;
-	private String status;
-	private String startDate;
-	private String endDate;
 
 }

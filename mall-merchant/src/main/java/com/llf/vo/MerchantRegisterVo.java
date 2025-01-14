@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantRoleInfoVo {
+public class MerchantRegisterVo {
 	
-	private String userName;
+	private String merchantId;
+	private String merchantLvl;
+	private String merchantLoginName;
 	private String roleId;
 	private String roleName;
 

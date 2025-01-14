@@ -9,16 +9,16 @@
         insert into merchant_pwd
         (
 	        merchantId,
-	        userName,
-	        userPassword,
+	        merchantLoginName,
+	        merchantLoginPwd,
 	        createDate,
 	        createTime
 		)
         values
         (
 	        #{merchantId},
-	        #{userName},
-	        #{userPassword},
+	        #{merchantLoginName},
+	        #{merchantLoginPwd},
 	        #{createDate},
 	        #{createTime}
         )
@@ -27,17 +27,15 @@
     <insert id="addRole" parameterType="MerchantRolePo">
         insert into merchant_role
         (
+	        merchantId,
 	        roleId,
-	        roleName,
-	        userName,
 	        createDate,
 	        createTime
 		)
         values
         (
+        	#{merchantId},
 	        #{roleId},
-	        #{roleName},
-	        #{userName},
 	        #{createDate},
 	        #{createTime}
         )
@@ -46,16 +44,20 @@
     <delete id="del" parameterType="MerchantPwdPo">
         delete from merchant_pwd 
         where 
-       		userName = #{userName}
-       	and
-       		userPassword = #{userPassword}
+       		merchantId = #{merchantId}
     </delete>
     
-    <update id="upd">
+    <delete id="delRole" parameterType="MerchantRolePo">
+        delete from merchant_role 
+        where 
+       		merchantId = #{merchantId}
+    </delete>
+    
+    <update id="upd" parameterType="MerchantPwdPo">
         update merchant_pwd 
         <set>
-        	<if test="userPassword != null and userPassword != ''">
-        		userPassword = #{userPassword},
+        	<if test="merchantLoginPwd != null and merchantLoginPwd != ''">
+        		merchantLoginPwd = #{merchantLoginPwd},
         	</if>
         	<if test="updateDate != null and updateDate != ''">
         		updateDate = #{updateDate},
@@ -65,26 +67,33 @@
         	</if>
         </set>
         where 
-       		userName = #{userName}
+       		merchantId = #{merchantId}
     </update>
     
-    <select id="qry" resultType="MerchantPwdPo">
-    	select * from merchant_pwd
-    	where 
-       		userName = #{userName}
-       	and
-       		userPassword = #{userPassword}
+    <select id="merchantPwdQry" parameterType="MerchantPwdPo" resultType="MerchantPwdPo">
+    	select *
+    	from merchant_pwd
+    	<where>
+    		<if test="merchantId != null and merchantId !=''">
+    			merchantId = #{merchantId}
+    		</if>
+    		<if test="merchantLoginName != null and merchantLoginName !=''">
+    			and merchantLoginName = #{merchantLoginName}
+    		</if>
+    		<if test="merchantLoginPwd != null and merchantLoginPwd !=''">
+    			and merchantLoginPwd = #{merchantLoginPwd}
+    		</if>
+       	</where> 
     </select>
     
-    <select id="qryMerchantLoginInfo" parameterType="MerchantPwdPo" resultType="map">
-    	select merchantId,pwd.userName,role.roleId,roleName
-    	from 
-    	merchant_pwd pwd
-    	left join merchant_role role on pwd.userName = role.userName
+    <select id="merchantDetailInfoQry" parameterType="MerchantPwdPo" resultType="map">
+    	select mi.* ,mp.merchantLoginName ,mr.roleId ,r.roleName 
+    	from merchant_pwd mp
+    	inner join merchant_role mr on mp.merchantId = mr.merchantId
+    	inner join merchant_info mi on mp.merchantId = mi.merchantId
+    	inner join role r on mr.roleId = r.roleId
     	where 
-       		pwd.userName = #{userName}
-       	and
-       		pwd.userPassword = #{userPassword}
+       		mp.merchantId = #{merchantId}
     </select>
     
 </mapper>

@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MerchantRegisterDto {
+public class MerchantInfoQryDto {
 	
-	private String merchantLoginName;
-	private String merchantLoginPwd;
+	private String merchantId;
 
 }
